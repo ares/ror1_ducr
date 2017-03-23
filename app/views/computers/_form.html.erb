@@ -1,0 +1,62 @@
+<%= form_for(computer) do |f| %>
+  <% if computer.errors.any? %>
+    <div class="alert alert-danger" role="alert" id="error_explanation">
+      <h4 class="alert-heading"><%= t("error", :count => computer.errors.count) %> zabránilo uložení objektu:</h2>
+
+      <ul>
+      <% computer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= f.label :city, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.collection_select :city, Computer::ALLOWED_CITIES, :to_s, :to_s, {}, { :class => 'form-control' } %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :warranty, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.check_box :warranty, :class => 'form-check' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :vendor, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.text_field :vendor, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :operating_system_id, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.collection_select :operating_system_id, OperatingSystem.all, :id, :name, {}, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :serial_number, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.number_field :serial_number, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :cost, :class => 'col-2 col-form-label' %>
+    <div class="col-10">
+      <%= f.number_field :cost, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <%= link_to 'Zpět', computers_path, :class => 'btn btn-secondary' %>
+      <%= f.submit 'Ulož', :class => 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

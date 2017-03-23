@@ -1,0 +1,6 @@
+<h1>Nahrat soubor s daty</h1>
+
+<%= form_tag create_import_computers_path, :multipart => true do %>
+  <%= file_field :computer, :data %>
+  <%= submit_tag 'Nahrát', :class => 'btn btn-primary' %>
+<% end %>

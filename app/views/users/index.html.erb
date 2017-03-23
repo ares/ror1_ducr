@@ -1,0 +1,29 @@
+<h1>Uživatelé</h1>
+
+<table class="table table-striped table-hover table-sm">
+  <thead class="thead-default">
+    <tr>
+      <th>Email</th>
+      <th>Admin</th>
+      <th>Naposledy přihlášen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.admin ? 'admin!' : 'normalni smrtelnik' %></td>
+        <td><%= l user.last_sign_in_at, :format => :short %></td>
+        <td>
+          <% if current_user.admin %>
+            <%= link_to 'Editovat', edit_user_path(user) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

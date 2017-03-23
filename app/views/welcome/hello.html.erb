@@ -1,0 +1,21 @@
+<h1>Vítejte v aplikaci počítače</h1>
+<p>Nejlepší aplikace na správu počítačů na světě.</p>
+
+<table>
+  <thead>
+    <tr>
+      <td>Vyrobce</td>
+      <td>Pocet pocitacu</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Computer.pluck(:vendor).uniq.each do |vendor| %>
+      <tr>
+        <td><%= vendor %></td>
+        <td><%= Computer.where(:vendor => vendor).count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>

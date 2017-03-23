@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Počítače</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="<%= root_path %>">
+          <%= image_tag 'logo.png', :size => '100x50', :alt => 'Drazni urad' %>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item <%= current_page?(welcome_version_path) ? 'active' : '' %>">
+              <%= link_to 'verze', welcome_version_path, :class => 'nav-link' %>
+            </li>
+            <li class="nav-item <%= "active" if current_page?(welcome_hello_path) %>">
+              <%= link_to('hello', welcome_hello_path, :class => 'nav-link' ) %>
+            </li>
+            <li class="nav-item <%= "active" if params[:controller] == 'computers' %>">
+              <%= link_to('počítače', computers_path, :class => 'nav-link' ) %>
+            </li>
+            <li class="nav-item <%= "active" if params[:controller] == 'operating_systems' %>">
+              <%= link_to('operační systémy', operating_systems_path, :class => 'nav-link' ) %>
+            </li>
+            <% if user_signed_in? %>
+              <li class="nav-item active">
+                <%= link_to current_user.email, destroy_user_session_path, :method => :delete, :class => 'nav-link' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+
+      <% if notice %>
+        <br>
+        <div class="alert alert-success" role="alert" id="notice">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <br>
+        <div class="alert alert-danger" role="alert" id="alert">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<h1><%= t('activerecord.models.computer.other') %></h1>
+
+<%= form_tag computers_path, :method => 'get' do %>
+  <%= collection_select :filter, :city, Computer::ALLOWED_CITIES, :to_s, :to_s, {} %>
+  <%= submit_tag 'Filtrovat', :class => 'btn btn-sm btn-secondary' %>
+<% end %>
+
+<br>
+
+<table class="table table-striped table-hover table-sm">
+  <thead class="thead-default">
+    <tr>
+      <th><%= link_to "Město", computers_path(:order => 'city') %></th>
+      <th>Cena</th>
+      <th>Záruka</th>
+      <th><%= link_to "Výrobce", computers_path(:order => 'vendor') %></th>
+      <th>OS</th>
+      <th><%= link_to "Vytvořeno", computers_path(:order => 'created_at') %></th>
+      <th>Upraveno</th>
+      <th>#</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @computers.each do |computer| %>
+      <tr>
+        <td><%= computer.city %></td>
+        <td><%= number_to_currency(computer.cost) %></td>
+        <td class="<%= "table-danger" if !computer.warranty? %>">
+          <% if !computer.warranty %>
+            <%= image_tag('glyphicons-207-ok.png') %>
+          <% else %>
+
+          <% end %>
+        </td>
+        <td><%= computer.vendor %></td>
+        <td><%= computer.operating_system.nil? ? '' : computer.operating_system.name %></td>
+        <td><%= l computer.created_at, :format => :short %></td>
+        <td><%= l computer.updated_at, :format => :short %></td>
+        <td><%= computer.serial_number %></td>
+        <td><%= link_to('Zobrazení', computer) %></td>
+        <td><%= link_to('Edit', edit_computer_path(computer)) %></td>
+        <td><%= link_to 'Destroy', computer, :method => :delete, :data => { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+Celkovy pocet pocitacu: <%= @computers.count %>
+
+<br>
+Strankovani
+<%= link_to '1', computers_path(:offset => 0) %>
+<%= link_to '2', computers_path(:offset => 5) %>
+<br>
+<%= link_to 'New Computer', new_computer_path %> | <%= link_to 'Nahrát hromadně', new_import_computers_path %>
